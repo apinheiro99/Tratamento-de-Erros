@@ -37,3 +37,5 @@ print(cliente.profissao)
 print(cliente.__dict__)
 
 pprint(cliente.__dict__, width = 40)
+
+conta_corrente = ContaCorrente(None, "00", "101")

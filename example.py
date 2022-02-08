@@ -1,12 +1,15 @@
 def dividir(dividendo, divisor):
-    # print(divisor.resultado)
-    return dividendo / divisor
+    try:
+        aux = dividendo / divisor
+        return aux
+    except:
+        print(f"Nao foi possivel dividir {dividendo} por {divisor}")
 
 def testa_divisao(divisor):
         resultado = dividir (10, divisor)
         print(f"O resultado da divisao de 10 por {divisor} e {resultado}")
 
-
+# Teste 1
 try:
     testa_divisao(0)
 except AttributeError as E:
@@ -18,4 +21,4 @@ except ZeroDivisionError as E:
     print(E)
     print(E.__class__.__bases__)
 
-print("Programa encerrado")
+print("Programa encerrado 1")

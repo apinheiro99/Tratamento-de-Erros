@@ -4,6 +4,7 @@ def dividir(dividendo, divisor):
         return aux
     except:
         print(f"Nao foi possivel dividir {dividendo} por {divisor}")
+        raise
 
 def testa_divisao(divisor):
         resultado = dividir (10, divisor)

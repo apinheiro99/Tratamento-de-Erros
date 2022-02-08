@@ -1,4 +1,7 @@
 def dividir(dividendo, divisor):
+    if not (isinstance(dividendo, int) and isinstance(divisor, int)):
+        raise ValueError ("dividir() deve receber apenas argumentos inteiros")
+    
     try:
         aux = dividendo / divisor
         return aux
@@ -12,7 +15,7 @@ def testa_divisao(divisor):
 
 # Teste 1
 try:
-    testa_divisao(0)
+    testa_divisao(1.2)
 except AttributeError as E:
     print("Erro de atributo tratado")
     print(E)
@@ -21,5 +24,9 @@ except ZeroDivisionError as E:
     print("Erro de divisao por zero tratado")
     print(E)
     print(E.__class__.__bases__)
+# except Exception as E:
+#     print("Erro geral")
+#     print(E)
+#     print(E.__class__.__bases__)
 
 print("Programa encerrado 1")

@@ -22,8 +22,7 @@ class ContaCorrente:
     def agencia(self):
         return self.__agencia
 
-    @agencia.setter
-    def agencia (self, value):
+    def __set_agencia (self, value):
         if not isinstance(value, int):
             print("O atributo agencia deve ser inteiro")
             return
@@ -38,8 +37,7 @@ class ContaCorrente:
     def numero(self):
         return self.__numero
 
-    @numero.setter
-    def numero (self, value):
+    def __set_numero (self, value):
         if not isinstance(value, int):
             return
         if value <= 0:
@@ -51,8 +49,7 @@ class ContaCorrente:
     def saldo(self):
         return self.__saldo
 
-    @saldo.setter
-    def saldo (self, value):
+    def __set_saldo (self, value):
         if not isinstance(value, int):
             return
         if value <= 0:
@@ -86,4 +83,5 @@ conta_corrente = ContaCorrente(None, "00A", "101")
 
 print("################################")
 conta_corrente.agencia = 0
+print(conta_corrente.saldo)
 print(conta_corrente.agencia)

@@ -104,6 +104,9 @@ def main():
             cliente = Cliente(nome, None, None)
             conta_corrente = ContaCorrente(cliente, agencia, numero)
             contas.append(conta_corrente)
+        except ValueError as E: 
+            print(E.args)
+            sys.exit()
         except KeyboardInterrupt:
             print(f"\n\n{len(contas)}(s) contas criadas")
             sys.exit()

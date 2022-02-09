@@ -1,4 +1,5 @@
 from pprint import pprint
+from termios import NL0
 
 class Cliente:
     def __init__ (self, nome, cpf, profissao):
@@ -11,12 +12,55 @@ class ContaCorrente:
     taxa_operacao = None
 
     def __init__(self, cliente, agencia, numero):
-        self.saldo =100
+        self.__saldo = 100
+        self.__agencia = 0
+        self.__numero = 0
+
         self.cliente = cliente
-        self.agencia = agencia
-        self.numero = numero
+        self.__set_agencia(agencia)
+        self.__set_numero(numero)
+
         ContaCorrente.total_contas_criadas += 1
         ContaCorrente.taxa_operacao = 30 / ContaCorrente.total_contas_criadas
+
+    @property
+    def agencia(self):
+        return self.__agencia
+
+    def __set_agencia (self, value):
+        if not isinstance(value, int):
+            raise ValueError("O atributo agencia deve ser inteiro")
+
+        if value <= 0:
+            raise ValueError("O atributo agencia deve ser maior que zero")
+
+        self.__agencia = value
+
+    @property
+    def numero(self):
+        return self.__numero
+
+    def __set_numero (self, value):
+        if not isinstance(value, int):
+            raise ValueError("O atributo numero deve ser inteiro")
+
+        if value <= 0:
+            raise ValueError("O atributo numero deve ser maior que zero")
+
+        self.__numero = value
+
+    @property
+    def saldo(self):
+        return self.__saldo
+
+    def __set_saldo (self, value):
+        if not isinstance(value, int):
+            raise ValueError("O atributo saldo deve ser inteiro")
+
+        if value <= 0:
+            raise ValueError("O atributo saldo deve ser maior que zero")
+
+        self.__saldo = value
 
     def trasferir (self, valor, favorecido):
         favorecido.depositar (valor)
@@ -27,15 +71,45 @@ class ContaCorrente:
     def depositar (self, valor):
         self.saldo += valor
 
-#Testando a classe
-cliente = Cliente("Jhon Doe", "123.456.789-00", "Desenvolvedor")
+# #Testando a classe
+# cliente = Cliente("Jhon Doe", "123.456.789-00", "Desenvolvedor")
 
-print(cliente.nome)
-print(cliente.cpf)
-print(cliente.profissao)
+# print(cliente.nome)
+# print(cliente.cpf)
+# print(cliente.profissao)
 
-print(cliente.__dict__)
+# print(cliente.__dict__)
 
-pprint(cliente.__dict__, width = 40)
+# pprint(cliente.__dict__, width = 40)
 
-conta_corrente = ContaCorrente(None, "00", "101")
+# conta_corrente = ContaCorrente(None, "00A", "101")
+
+# #Teste 02
+
+# print("################################")
+# conta_corrente = ContaCorrente(None, 100, "101")
+# # conta_corrente.agencia = 0
+# print(conta_corrente.saldo)
+# print(conta_corrente.agencia)
+
+def main():
+    import sys
+
+    contas = []
+    while True:
+        try:
+            nome = input("Nome do Cliente:\n")
+            agencia = input("Numero da agencia:\n")
+            numero = input("Numero da conta corrente:\n")
+            cliente = Cliente(nome, None, None)
+            conta_corrente = ContaCorrente(cliente, agencia, numero)
+            contas.append(conta_corrente)
+        except ValueError as E: 
+            print(E.args)
+            sys.exit()
+        except KeyboardInterrupt:
+            print(f"\n\n{len(contas)}(s) contas criadas")
+            sys.exit()
+
+if __name__ == "__main__":
+    main()

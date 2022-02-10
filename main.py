@@ -1,5 +1,5 @@
 from pprint import pprint
-from termios import NL0
+from exceptions import SaldoInsuficienteError
 
 class Cliente:
     def __init__ (self, nome, cpf, profissao):
@@ -57,19 +57,27 @@ class ContaCorrente:
         if not isinstance(value, int):
             raise ValueError("O atributo saldo deve ser inteiro")
 
-        if value <= 0:
-            raise ValueError("O atributo saldo deve ser maior que zero")
-
         self.__saldo = value
 
     def trasferir (self, valor, favorecido):
+        if valor < 0:
+            raise ValueError("O valor transferido nao pode ser negativo")
+        self.sacar(valor)
         favorecido.depositar (valor)
 
     def sacar (self, valor):
-        self.saldo -= valor
+        if valor < 0:
+            raise ValueError("O valor sacado nao pode ser negativo")
+
+        if self.__saldo < valor:
+            raise SaldoInsuficienteError (saldo = self.__saldo, valor=valor)
+
+        self.__set_saldo(self.__saldo - valor)
+        # self.__saldo -= valor
 
     def depositar (self, valor):
-        self.saldo += valor
+        self.__set_saldo(self.__saldo + valor)
+        # self.__saldo += valor
 
 # #Testando a classe
 # cliente = Cliente("Jhon Doe", "123.456.789-00", "Desenvolvedor")
@@ -92,24 +100,39 @@ class ContaCorrente:
 # print(conta_corrente.saldo)
 # print(conta_corrente.agencia)
 
-def main():
-    import sys
+# def main():
+#     import sys
 
-    contas = []
-    while True:
-        try:
-            nome = input("Nome do Cliente:\n")
-            agencia = input("Numero da agencia:\n")
-            numero = input("Numero da conta corrente:\n")
-            cliente = Cliente(nome, None, None)
-            conta_corrente = ContaCorrente(cliente, agencia, numero)
-            contas.append(conta_corrente)
-        except ValueError as E: 
-            print(E.args)
-            sys.exit()
-        except KeyboardInterrupt:
-            print(f"\n\n{len(contas)}(s) contas criadas")
-            sys.exit()
+#     contas = []
+#     while True:
+#         try:
+#             nome = input("Nome do Cliente:\n")
+#             agencia = input("Numero da agencia:\n")
+#             numero = input("Numero da conta corrente:\n")
+#             cliente = Cliente(nome, None, None)
+#             conta_corrente = ContaCorrente(cliente, agencia, numero)
+#             contas.append(conta_corrente)
+#         except ValueError as E: 
+#             print(E.args)
+#             sys.exit()
+#         except KeyboardInterrupt:
+#             print(f"\n\n{len(contas)}(s) contas criadas")
+#             sys.exit()
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
+
+try:
+    conta_corrente = ContaCorrente(None,400,123456)
+    conta_corrente.depositar(100)
+    print("Saldo:",conta_corrente.saldo)
+    conta_corrente.sacar(110)
+    print("Saldo:",conta_corrente.saldo)
+except SaldoInsuficienteError as E:
+    print(E.args)
+
+conta_corrente1 = ContaCorrente(None,400,123456)
+conta_corrente2 = ContaCorrente(None,401,212256)
+conta_corrente1.trasferir(50,conta_corrente2)
+print("Saldo conta1: ",conta_corrente1.saldo)
+print("Saldo conta2: ",conta_corrente2.saldo)

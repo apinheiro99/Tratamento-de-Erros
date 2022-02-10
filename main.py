@@ -64,7 +64,7 @@ class ContaCorrente:
 
     def sacar (self, valor):
         if self.__saldo < valor:
-            raise SaldoInsuficienteError ("Saldo Insuficiente")
+            raise SaldoInsuficienteError (saldo = self.__saldo, valor=valor)
 
         self.__set_saldo(self.__saldo - valor)
         # self.__saldo -= valor

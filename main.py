@@ -60,6 +60,9 @@ class ContaCorrente:
         self.__saldo = value
 
     def trasferir (self, valor, favorecido):
+        if valor < 0:
+            raise ValueError("O valor transferido nao pode ser negativo")
+        self.sacar(valor)
         favorecido.depositar (valor)
 
     def sacar (self, valor):
@@ -123,7 +126,13 @@ try:
     conta_corrente = ContaCorrente(None,400,123456)
     conta_corrente.depositar(100)
     print("Saldo:",conta_corrente.saldo)
-    conta_corrente.sacar(-210)
+    conta_corrente.sacar(110)
     print("Saldo:",conta_corrente.saldo)
 except SaldoInsuficienteError as E:
     print(E.args)
+
+conta_corrente1 = ContaCorrente(None,400,123456)
+conta_corrente2 = ContaCorrente(None,401,212256)
+conta_corrente1.trasferir(50,conta_corrente2)
+print("Saldo conta1: ",conta_corrente1.saldo)
+print("Saldo conta2: ",conta_corrente2.saldo)

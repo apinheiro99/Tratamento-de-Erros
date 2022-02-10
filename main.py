@@ -63,6 +63,9 @@ class ContaCorrente:
         favorecido.depositar (valor)
 
     def sacar (self, valor):
+        if valor < 0:
+            raise ValueError("O valor sacado nao pode ser negativo")
+
         if self.__saldo < valor:
             raise SaldoInsuficienteError (saldo = self.__saldo, valor=valor)
 
@@ -120,7 +123,7 @@ try:
     conta_corrente = ContaCorrente(None,400,123456)
     conta_corrente.depositar(100)
     print("Saldo:",conta_corrente.saldo)
-    conta_corrente.sacar(210)
+    conta_corrente.sacar(-210)
     print("Saldo:",conta_corrente.saldo)
 except SaldoInsuficienteError as E:
     print(E.args)

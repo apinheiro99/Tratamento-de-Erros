@@ -66,10 +66,10 @@ class ContaCorrente:
         favorecido.depositar (valor)
 
     def sacar (self, valor):
-        self.saldo -= valor
+        self.__saldo -= valor
 
     def depositar (self, valor):
-        self.saldo += valor
+        self.__saldo += valor
 
 # #Testando a classe
 # cliente = Cliente("Jhon Doe", "123.456.789-00", "Desenvolvedor")
@@ -92,24 +92,30 @@ class ContaCorrente:
 # print(conta_corrente.saldo)
 # print(conta_corrente.agencia)
 
-def main():
-    import sys
+# def main():
+#     import sys
 
-    contas = []
-    while True:
-        try:
-            nome = input("Nome do Cliente:\n")
-            agencia = input("Numero da agencia:\n")
-            numero = input("Numero da conta corrente:\n")
-            cliente = Cliente(nome, None, None)
-            conta_corrente = ContaCorrente(cliente, agencia, numero)
-            contas.append(conta_corrente)
-        except ValueError as E: 
-            print(E.args)
-            sys.exit()
-        except KeyboardInterrupt:
-            print(f"\n\n{len(contas)}(s) contas criadas")
-            sys.exit()
+#     contas = []
+#     while True:
+#         try:
+#             nome = input("Nome do Cliente:\n")
+#             agencia = input("Numero da agencia:\n")
+#             numero = input("Numero da conta corrente:\n")
+#             cliente = Cliente(nome, None, None)
+#             conta_corrente = ContaCorrente(cliente, agencia, numero)
+#             contas.append(conta_corrente)
+#         except ValueError as E: 
+#             print(E.args)
+#             sys.exit()
+#         except KeyboardInterrupt:
+#             print(f"\n\n{len(contas)}(s) contas criadas")
+#             sys.exit()
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
+
+conta_corrente = ContaCorrente(None,400,123456)
+conta_corrente.depositar(100)
+print("Saldo:",conta_corrente.saldo)
+conta_corrente.sacar(50)
+print("Saldo:",conta_corrente.saldo)

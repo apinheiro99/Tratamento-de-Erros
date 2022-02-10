@@ -1,5 +1,5 @@
 from pprint import pprint
-from termios import NL0
+from exceptions import SaldoInsuficienteError
 
 class Cliente:
     def __init__ (self, nome, cpf, profissao):
@@ -57,19 +57,18 @@ class ContaCorrente:
         if not isinstance(value, int):
             raise ValueError("O atributo saldo deve ser inteiro")
 
-        if value <= 0:
-            raise ValueError("O atributo saldo deve ser maior que zero")
-
         self.__saldo = value
 
     def trasferir (self, valor, favorecido):
         favorecido.depositar (valor)
 
     def sacar (self, valor):
-        self.__saldo -= valor
+        self.__set_saldo(self.__saldo - valor)
+        # self.__saldo -= valor
 
     def depositar (self, valor):
-        self.__saldo += valor
+        self.__set_saldo(self.__saldo + valor)
+        # self.__saldo += valor
 
 # #Testando a classe
 # cliente = Cliente("Jhon Doe", "123.456.789-00", "Desenvolvedor")
@@ -117,5 +116,5 @@ class ContaCorrente:
 conta_corrente = ContaCorrente(None,400,123456)
 conta_corrente.depositar(100)
 print("Saldo:",conta_corrente.saldo)
-conta_corrente.sacar(50)
+conta_corrente.sacar(200)
 print("Saldo:",conta_corrente.saldo)

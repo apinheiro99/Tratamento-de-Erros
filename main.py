@@ -116,8 +116,11 @@ class ContaCorrente:
 # if __name__ == "__main__":
 #     main()
 
-conta_corrente = ContaCorrente(None,400,123456)
-conta_corrente.depositar(100)
-print("Saldo:",conta_corrente.saldo)
-conta_corrente.sacar(210)
-print("Saldo:",conta_corrente.saldo)
+try:
+    conta_corrente = ContaCorrente(None,400,123456)
+    conta_corrente.depositar(100)
+    print("Saldo:",conta_corrente.saldo)
+    conta_corrente.sacar(210)
+    print("Saldo:",conta_corrente.saldo)
+except SaldoInsuficienteError as E:
+    print(E.args)

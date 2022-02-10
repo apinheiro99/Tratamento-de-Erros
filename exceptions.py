@@ -5,4 +5,4 @@ class SaldoInsuficienteError(Exception):
         self.__valor = valor
         msg = "Saldo insuficiente para efetuar a transacao\n" \
             f"Saldo atual: {self.__saldo}  Valor a ser sacado: {self.__valor}"
-        super(SaldoInsuficienteError, self).__init__(message or msg, *args)
+        super(SaldoInsuficienteError, self).__init__(message or msg, self.__saldo, self.__valor, *args)

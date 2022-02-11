@@ -163,4 +163,5 @@ try:
 except IOError:
     print("Excecao do tipo IOError capturada e tratada")
 finally:
-    leitor.fechar()
+    if "leitor" in locals():
+        leitor.fechar()

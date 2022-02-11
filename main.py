@@ -1,5 +1,5 @@
 from pprint import pprint
-from exceptions import SaldoInsuficienteError
+from exceptions import OperacaoFinanceiraError, SaldoInsuficienteError
 
 class Cliente:
     def __init__ (self, nome, cpf, profissao):
@@ -68,8 +68,8 @@ class ContaCorrente:
             self.sacar(valor)
         except SaldoInsuficienteError as E:
             self.transferencias_nao_permitidas += 1
-            E.args = ("Operacao nao finalizada",)
-            raise E
+            E.args = ()
+            raise OperacaoFinanceiraError("Operacao nao finalizada") from E
         favorecido.depositar (valor)
 
     def sacar (self, valor):

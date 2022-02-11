@@ -154,9 +154,13 @@ os.system("clear")
 #     import traceback
 #     traceback.print_exc()
 
-leitor = LeitorDeArquivo("Arquivo.txt")
-leitor.ler_proxima_linha()
-leitor.ler_proxima_linha()
-leitor.ler_proxima_linha()
-
-leitor.fechar()
+try:
+    leitor = LeitorDeArquivo("Arquivo.txt")
+    leitor.ler_proxima_linha()
+    leitor.ler_proxima_linha()
+    leitor.ler_proxima_linha()
+   
+except IOError:
+    print("Excecao do tipo IOError capturada e tratada")
+finally:
+    leitor.fechar()

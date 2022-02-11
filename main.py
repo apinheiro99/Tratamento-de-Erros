@@ -16,6 +16,7 @@ class ContaCorrente:
         self.__agencia = 0
         self.__numero = 0
         self.saques_nao_permitidos = 0
+        self.transferencias_nao_permitidas = 0
 
         self.cliente = cliente
         self.__set_agencia(agencia)
@@ -63,7 +64,13 @@ class ContaCorrente:
     def trasferir (self, valor, favorecido):
         if valor < 0:
             raise ValueError("O valor transferido nao pode ser negativo")
-        self.sacar(valor)
+        try:
+            self.sacar(valor)
+        except SaldoInsuficienteError as E:
+            import traceback
+            self.transferencias_nao_permitidas += 1
+            traceback.print_exc()
+            raise E
         favorecido.depositar (valor)
 
     def sacar (self, valor):

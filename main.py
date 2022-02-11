@@ -154,14 +154,19 @@ os.system("clear")
 #     import traceback
 #     traceback.print_exc()
 
-try:
-    leitor = LeitorDeArquivo("Arquivo.txt")
-    leitor.ler_proxima_linha()
-    leitor.ler_proxima_linha()
-    leitor.ler_proxima_linha()
+# try:
+#     leitor = LeitorDeArquivo("Arquivo.txt")
+#     leitor.ler_proxima_linha()
+#     leitor.ler_proxima_linha()
+#     leitor.ler_proxima_linha()
    
-except IOError:
-    print("Excecao do tipo IOError capturada e tratada")
-finally:
-    if "leitor" in locals():
-        leitor.fechar()
+# except IOError:
+#     print("Excecao do tipo IOError capturada e tratada")
+# finally:
+#     if "leitor" in locals():
+#         leitor.fechar()
+
+with LeitorDeArquivo("Arquivo.txt") as leitor:
+    leitor.ler_proxima_linha()
+    leitor.ler_proxima_linha()
+    leitor.ler_proxima_linha()

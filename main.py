@@ -171,7 +171,7 @@ try:
         leitor.ler_proxima_linha()
         leitor.ler_proxima_linha()
         leitor.ler_proxima_linha()
-except IOError:
-    print("Excecao do tipo IOError capturada e tratada")
 except FileNotFoundError:
     print("Excecao do tipo FileNotFoundError capturada e tratada")
+except IOError:
+    print("Excecao do tipo IOError capturada e tratada")

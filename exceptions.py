@@ -4,7 +4,7 @@ from logging import exception
 class OperacaoFinanceiraError(Exception):
     pass
 
-class SaldoInsuficienteError(Exception):
+class SaldoInsuficienteError(OperacaoFinanceiraError):
     
     def __init__(self, message="", saldo = None, valor = None, *args):
         self.__saldo = saldo

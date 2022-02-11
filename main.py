@@ -145,9 +145,10 @@ os.system("clear")
 conta_corrente1 = ContaCorrente(None,400,123456)
 conta_corrente2 = ContaCorrente(None,401,212256)
 try:
-    conta_corrente1.trasferir(500,conta_corrente2)
+    # conta_corrente1.trasferir(500,conta_corrente2)
+    conta_corrente1.sacar(1000)
     print("Saldo conta1: ",conta_corrente1.saldo)
     print("Saldo conta2: ",conta_corrente2.saldo)
 except OperacaoFinanceiraError as E:
-    breakpoint()
-    pass
+    import traceback
+    traceback.print_exc()

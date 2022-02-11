@@ -1,5 +1,5 @@
 from pprint import pprint
-from exceptions import SaldoInsuficienteError
+from exceptions import OperacaoFinanceiraError, SaldoInsuficienteError
 
 class Cliente:
     def __init__ (self, nome, cpf, profissao):
@@ -15,6 +15,8 @@ class ContaCorrente:
         self.__saldo = 100
         self.__agencia = 0
         self.__numero = 0
+        self.saques_nao_permitidos = 0
+        self.transferencias_nao_permitidas = 0
 
         self.cliente = cliente
         self.__set_agencia(agencia)
@@ -62,15 +64,21 @@ class ContaCorrente:
     def trasferir (self, valor, favorecido):
         if valor < 0:
             raise ValueError("O valor transferido nao pode ser negativo")
-        self.sacar(valor)
+        try:
+            self.sacar(valor)
+        except SaldoInsuficienteError as E:
+            self.transferencias_nao_permitidas += 1
+            E.args = ()
+            raise OperacaoFinanceiraError("Operacao nao finalizada") from E
         favorecido.depositar (valor)
 
     def sacar (self, valor):
         if valor < 0:
             raise ValueError("O valor sacado nao pode ser negativo")
 
-        if self.__saldo < valor:
-            raise SaldoInsuficienteError (saldo = self.__saldo, valor=valor)
+        if self.saldo < valor:
+            self.saques_nao_permitidos += 1
+            raise SaldoInsuficienteError (saldo = self.saldo, valor=valor)
 
         self.__set_saldo(self.__saldo - valor)
         # self.__saldo -= valor
@@ -122,17 +130,25 @@ class ContaCorrente:
 # if __name__ == "__main__":
 #     main()
 
-try:
-    conta_corrente = ContaCorrente(None,400,123456)
-    conta_corrente.depositar(100)
-    print("Saldo:",conta_corrente.saldo)
-    conta_corrente.sacar(110)
-    print("Saldo:",conta_corrente.saldo)
-except SaldoInsuficienteError as E:
-    print(E.args)
+# try:
+#     conta_corrente = ContaCorrente(None,400,123456)
+#     conta_corrente.depositar(100)
+#     print("Saldo:",conta_corrente.saldo)
+#     conta_corrente.sacar(110)
+#     print("Saldo:",conta_corrente.saldo)
+# except SaldoInsuficienteError as E:
+#     print(E.args)
+
+import os
+os.system("clear")
 
 conta_corrente1 = ContaCorrente(None,400,123456)
 conta_corrente2 = ContaCorrente(None,401,212256)
-conta_corrente1.trasferir(50,conta_corrente2)
-print("Saldo conta1: ",conta_corrente1.saldo)
-print("Saldo conta2: ",conta_corrente2.saldo)
+try:
+    # conta_corrente1.trasferir(500,conta_corrente2)
+    conta_corrente1.sacar(1000)
+    print("Saldo conta1: ",conta_corrente1.saldo)
+    print("Saldo conta2: ",conta_corrente2.saldo)
+except OperacaoFinanceiraError as E:
+    import traceback
+    traceback.print_exc()

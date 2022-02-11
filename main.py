@@ -67,9 +67,8 @@ class ContaCorrente:
         try:
             self.sacar(valor)
         except SaldoInsuficienteError as E:
-            import traceback
             self.transferencias_nao_permitidas += 1
-            traceback.print_exc()
+            E.args = ("Operacao nao finalizada",)
             raise E
         favorecido.depositar (valor)
 

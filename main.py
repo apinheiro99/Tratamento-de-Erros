@@ -148,9 +148,6 @@ try:
     conta_corrente1.trasferir(500,conta_corrente2)
     print("Saldo conta1: ",conta_corrente1.saldo)
     print("Saldo conta2: ",conta_corrente2.saldo)
-except SaldoInsuficienteError as E:
-    import traceback
-    print(E.saldo)
-    print (E.valor)
-    print("Excecao do tipo:", E.__class__.__name__)
-    traceback.print_exc()
+except OperacaoFinanceiraError as E:
+    breakpoint()
+    pass

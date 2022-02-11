@@ -1,5 +1,6 @@
 from pprint import pprint
 from exceptions import OperacaoFinanceiraError, SaldoInsuficienteError
+from leitor import LeitorDeArquivo
 
 class Cliente:
     def __init__ (self, nome, cpf, profissao):
@@ -142,13 +143,35 @@ class ContaCorrente:
 import os
 os.system("clear")
 
-conta_corrente1 = ContaCorrente(None,400,123456)
-conta_corrente2 = ContaCorrente(None,401,212256)
+# conta_corrente1 = ContaCorrente(None,400,123456)
+# conta_corrente2 = ContaCorrente(None,401,212256)
+# try:
+#     # conta_corrente1.trasferir(500,conta_corrente2)
+#     conta_corrente1.sacar(1000)
+#     print("Saldo conta1: ",conta_corrente1.saldo)
+#     print("Saldo conta2: ",conta_corrente2.saldo)
+# except OperacaoFinanceiraError as E:
+#     import traceback
+#     traceback.print_exc()
+
+# try:
+#     leitor = LeitorDeArquivo("Arquivo.txt")
+#     leitor.ler_proxima_linha()
+#     leitor.ler_proxima_linha()
+#     leitor.ler_proxima_linha()
+   
+# except IOError:
+#     print("Excecao do tipo IOError capturada e tratada")
+# finally:
+#     if "leitor" in locals():
+#         leitor.fechar()
+
 try:
-    # conta_corrente1.trasferir(500,conta_corrente2)
-    conta_corrente1.sacar(1000)
-    print("Saldo conta1: ",conta_corrente1.saldo)
-    print("Saldo conta2: ",conta_corrente2.saldo)
-except OperacaoFinanceiraError as E:
-    import traceback
-    traceback.print_exc()
+    with LeitorDeArquivo("Arquivo.txt") as leitor:
+        leitor.ler_proxima_linha()
+        leitor.ler_proxima_linha()
+        leitor.ler_proxima_linha()
+except FileNotFoundError:
+    print("Excecao do tipo FileNotFoundError capturada e tratada")
+except IOError:
+    print("Excecao do tipo IOError capturada e tratada")

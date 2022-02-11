@@ -132,8 +132,8 @@ class ContaCorrente:
 #     print(E.args)
 
 import os
-
 os.system("clear")
+
 conta_corrente1 = ContaCorrente(None,400,123456)
 conta_corrente2 = ContaCorrente(None,401,212256)
 try:
@@ -141,6 +141,8 @@ try:
     print("Saldo conta1: ",conta_corrente1.saldo)
     print("Saldo conta2: ",conta_corrente2.saldo)
 except SaldoInsuficienteError as E:
+    import traceback
     print(E.saldo)
     print (E.valor)
     print("Excecao do tipo:", E.__class__.__name__)
+    traceback.print_exc()

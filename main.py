@@ -122,17 +122,25 @@ class ContaCorrente:
 # if __name__ == "__main__":
 #     main()
 
-try:
-    conta_corrente = ContaCorrente(None,400,123456)
-    conta_corrente.depositar(100)
-    print("Saldo:",conta_corrente.saldo)
-    conta_corrente.sacar(110)
-    print("Saldo:",conta_corrente.saldo)
-except SaldoInsuficienteError as E:
-    print(E.args)
+# try:
+#     conta_corrente = ContaCorrente(None,400,123456)
+#     conta_corrente.depositar(100)
+#     print("Saldo:",conta_corrente.saldo)
+#     conta_corrente.sacar(110)
+#     print("Saldo:",conta_corrente.saldo)
+# except SaldoInsuficienteError as E:
+#     print(E.args)
 
+import os
+
+os.system("clear")
 conta_corrente1 = ContaCorrente(None,400,123456)
 conta_corrente2 = ContaCorrente(None,401,212256)
-conta_corrente1.trasferir(50,conta_corrente2)
-print("Saldo conta1: ",conta_corrente1.saldo)
-print("Saldo conta2: ",conta_corrente2.saldo)
+try:
+    conta_corrente1.trasferir(500,conta_corrente2)
+    print("Saldo conta1: ",conta_corrente1.saldo)
+    print("Saldo conta2: ",conta_corrente2.saldo)
+except SaldoInsuficienteError as E:
+    print(E.saldo)
+    print (E.valor)
+    print("Excecao do tipo:", E.__class__.__name__)

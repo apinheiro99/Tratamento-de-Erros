@@ -15,6 +15,7 @@ class ContaCorrente:
         self.__saldo = 100
         self.__agencia = 0
         self.__numero = 0
+        self.saques_nao_permitidos = 0
 
         self.cliente = cliente
         self.__set_agencia(agencia)
@@ -69,8 +70,9 @@ class ContaCorrente:
         if valor < 0:
             raise ValueError("O valor sacado nao pode ser negativo")
 
-        if self.__saldo < valor:
-            raise SaldoInsuficienteError (saldo = self.__saldo, valor=valor)
+        if self.saldo < valor:
+            self.saques_nao_permitidos += 1
+            raise SaldoInsuficienteError (saldo = self.saldo, valor=valor)
 
         self.__set_saldo(self.__saldo - valor)
         # self.__saldo -= valor

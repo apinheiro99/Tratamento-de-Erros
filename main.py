@@ -166,7 +166,12 @@ os.system("clear")
 #     if "leitor" in locals():
 #         leitor.fechar()
 
-with LeitorDeArquivo("Arquivo.txt") as leitor:
-    leitor.ler_proxima_linha()
-    leitor.ler_proxima_linha()
-    leitor.ler_proxima_linha()
+try:
+    with LeitorDeArquivo("Arquivo.txt") as leitor:
+        leitor.ler_proxima_linha()
+        leitor.ler_proxima_linha()
+        leitor.ler_proxima_linha()
+except IOError:
+    print("Excecao do tipo IOError capturada e tratada")
+except FileNotFoundError:
+    print("Excecao do tipo FileNotFoundError capturada e tratada")
